@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/drawable/ic_filter_list.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/drawable/ic_list.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/drawable/ic_statistics_100dp.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/drawable/list_completed_touch_feedback.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/drawable/touch_feedback.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/addtask_act.xml" value="0.136" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/addtask_frag.xml" value="0.16" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/nav_header.xml" value="0.176" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/statistics_act.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/statistics_frag.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/task_item.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/taskdetail_act.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/taskdetail_frag.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/layout/tasks_frag.xml" value="0.264" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/menu/drawer_actions.xml" value="0.2578125" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/menu/filter_task.xml" value="0.2578125" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/menu/filter_tasks.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/menu/taskdetail_fragment_menu.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/menu/tasks_fragment_detail.xml" value="0.2578125" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/TodoListMVp/app/src/main/res/menu/tasks_fragment_menu.xml" value="0.2578125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
