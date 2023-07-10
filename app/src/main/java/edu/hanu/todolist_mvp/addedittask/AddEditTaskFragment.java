@@ -6,13 +6,14 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -24,6 +25,14 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
     public static final String EDIT_TASK_ID = "EDIT_TASK_ID";
     private EditText tvTitle, tvDesc;
     private String editedTaskId;
+
+    public static AddEditTaskFragment newInstance() {
+        return new AddEditTaskFragment();
+    }
+
+    public AddEditTaskFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onResume() {

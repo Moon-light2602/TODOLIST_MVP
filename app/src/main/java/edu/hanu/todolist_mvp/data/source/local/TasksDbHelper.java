@@ -32,4 +32,8 @@ public class TasksDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
     }
+
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion){
+
+    }
 }

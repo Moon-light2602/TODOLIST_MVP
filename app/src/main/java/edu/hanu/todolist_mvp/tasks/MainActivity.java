@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import edu.hanu.todolist_mvp.R;
 import edu.hanu.todolist_mvp.data.source.TasksRepository;
 import edu.hanu.todolist_mvp.data.source.local.TasksLocalDataSource;
+import edu.hanu.todolist_mvp.mock.Injection;
 import edu.hanu.todolist_mvp.statistics.StatisticsActivity;
 import edu.hanu.todolist_mvp.util.ActivityUtils;
 
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), tasksFragment, R.id.contentFrame);
         }
 
-        TasksRepository repository = TasksRepository.getInstance(TasksLocalDataSource.getInstance(this));
-        tasksPresenter = new TasksPresenter(repository, tasksFragment);
+        tasksPresenter = new TasksPresenter(
+                Injection.provideTasksRepository(getApplicationContext()), tasksFragment);
 
         if(savedInstanceState != null) {
             TasksFilterType currentFiltering = (TasksFilterType) savedInstanceState.getSerializable(CURRENT_FILTERING_KEY);

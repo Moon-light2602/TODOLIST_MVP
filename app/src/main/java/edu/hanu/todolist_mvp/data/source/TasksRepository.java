@@ -16,17 +16,20 @@ import edu.hanu.todolist_mvp.data.Task;
 public class TasksRepository implements TasksDataSource {
     private static TasksRepository INSTANCE = null;
     private TasksDataSource tasksLocalDataSource;
+    private TasksDataSource tasksRemoteDataSource;
     Map<String, Task> cachedTasks;
     boolean cacheIsDirty = false;
 
     @SuppressLint("RestrictedApi")
-    private TasksRepository(@NonNull TasksDataSource tasksLocalDataSource) {
+    private TasksRepository(@NonNull TasksDataSource tasksLocalDataSource, @NonNull TasksDataSource tasksRemoteDataSource) {
         this.tasksLocalDataSource = checkNotNull(tasksLocalDataSource);
+        this.tasksRemoteDataSource = checkNotNull(tasksRemoteDataSource);
+
     }
 
-    public static TasksRepository getInstance(TasksDataSource tasksLocalDataSource) {
+    public static TasksRepository getInstance(TasksDataSource tasksLocalDataSource, TasksDataSource tasksRemoteDataSource) {
         if(INSTANCE == null) {
-            INSTANCE = new TasksRepository(tasksLocalDataSource);
+            INSTANCE = new TasksRepository(tasksLocalDataSource, tasksRemoteDataSource);
         }
         return INSTANCE;
     }
@@ -52,6 +55,7 @@ public class TasksRepository implements TasksDataSource {
 
             @Override
             public void onDataNotAvailable() {
+                getTasksFromRemoteDataSource(callback);
 
             }
         });
@@ -92,6 +96,7 @@ public class TasksRepository implements TasksDataSource {
     public void saveTask(@NonNull Task task) {
         checkNotNull(task);
         tasksLocalDataSource.saveTask(task);
+        tasksRemoteDataSource.saveTask(task);
 
         if(cachedTasks == null) {
             cachedTasks = new LinkedHashMap<>();
@@ -104,6 +109,7 @@ public class TasksRepository implements TasksDataSource {
     public void completeTask(@NonNull Task task) {
         checkNotNull(task);
         tasksLocalDataSource.completeTask(task);
+        tasksRemoteDataSource.completeTask(task);
 
         Task completedTask = new Task(task.getId(), task.getTitle(), task.getDesc(), true);
 
@@ -125,6 +131,7 @@ public class TasksRepository implements TasksDataSource {
     public void activateTask(@NonNull Task task) {
         checkNotNull(task);
         tasksLocalDataSource.activateTask(task);
+        tasksRemoteDataSource.activateTask(task);
 
         Task activeTask = new Task(task.getId(), task.getTitle(), task.getDesc());
 
@@ -145,6 +152,7 @@ public class TasksRepository implements TasksDataSource {
     @Override
     public void clearCompletedTasks() {
         tasksLocalDataSource.clearCompletedTasks();
+        tasksRemoteDataSource.clearCompletedTasks();
 
         // Do in memory cache update to keep the app UI up to date
         if (cachedTasks == null) {
@@ -167,6 +175,7 @@ public class TasksRepository implements TasksDataSource {
     @Override
     public void deleteAllTasks() {
         tasksLocalDataSource.deleteAllTasks();
+        tasksRemoteDataSource.deleteAllTasks();
 
         if (cachedTasks == null) {
             cachedTasks = new LinkedHashMap<>();
@@ -178,19 +187,9 @@ public class TasksRepository implements TasksDataSource {
     @Override
     public void deleteTask(@NonNull String taskId) {
         tasksLocalDataSource.deleteTask(checkNotNull(taskId));
+        tasksRemoteDataSource.deleteTask(checkNotNull(taskId));
 
         cachedTasks.remove(taskId);
-    }
-
-    private void refreshCache(List<Task> tasks) {
-        if(cachedTasks == null) {
-            cachedTasks = new LinkedHashMap<>();
-        }
-        cachedTasks.clear();
-        for(Task task : tasks) {
-            cachedTasks.put(task.getId(), task);
-        }
-        cacheIsDirty = false;
     }
 
     @SuppressLint("RestrictedApi")
@@ -202,5 +201,38 @@ public class TasksRepository implements TasksDataSource {
         } else {
             return cachedTasks.get(id);
         }
+    }
+
+    private void getTasksFromRemoteDataSource(@NonNull final LoadTasksCallback callback) {
+        tasksRemoteDataSource.getTasks(new LoadTasksCallback() {
+            @Override
+            public void onTasksLoaded(List<Task> tasks) {
+                refreshCache(tasks);
+                refreshLocalDataSource(tasks);
+                callback.onTasksLoaded(new ArrayList<>(cachedTasks.values()));
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+        });
+    }
+
+    private void refreshLocalDataSource(List<Task> tasks) {
+        tasksLocalDataSource.deleteAllTasks();
+        for (Task task : tasks) {
+            tasksLocalDataSource.saveTask(task);
+        }
+    }
+    private void refreshCache(List<Task> tasks) {
+        if(cachedTasks == null) {
+            cachedTasks = new LinkedHashMap<>();
+        }
+        cachedTasks.clear();
+        for(Task task : tasks) {
+            cachedTasks.put(task.getId(), task);
+        }
+        cacheIsDirty = false;
     }
 }

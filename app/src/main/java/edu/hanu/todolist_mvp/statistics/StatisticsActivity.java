@@ -13,12 +13,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
+import edu.hanu.todolist_mvp.data.source.TasksRepository;
+import edu.hanu.todolist_mvp.data.source.local.TasksLocalDataSource;
+import edu.hanu.todolist_mvp.mock.Injection;
 import edu.hanu.todolist_mvp.tasks.MainActivity;
 import edu.hanu.todolist_mvp.R;
+import edu.hanu.todolist_mvp.util.ActivityUtils;
 
 public class StatisticsActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private StatisticsPresenter statisticsPresenter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +45,14 @@ public class StatisticsActivity extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
+        StatisticsFragment statisticFragment = (StatisticsFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if(statisticFragment == null) {
+            statisticFragment = new StatisticsFragment();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), statisticFragment, R.id.contentFrame);
+        }
+
+        new StatisticsPresenter(
+                Injection.provideTasksRepository(getApplicationContext()), statisticFragment);
     }
 
     @Override
@@ -61,8 +75,8 @@ public class StatisticsActivity extends AppCompatActivity {
                             case R.id.list_navigation_menu_item:
                                 Intent intent =
                                         new Intent(StatisticsActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+//                                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                                 break;
                             case R.id.statistics_navigation_menu_item:

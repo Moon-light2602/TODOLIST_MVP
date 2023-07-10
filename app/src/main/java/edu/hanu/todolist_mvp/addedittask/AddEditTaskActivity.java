@@ -14,6 +14,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import edu.hanu.todolist_mvp.R;
 import edu.hanu.todolist_mvp.data.source.TasksRepository;
 import edu.hanu.todolist_mvp.data.source.local.TasksLocalDataSource;
+import edu.hanu.todolist_mvp.data.source.remote.TasksRemoteDataSource;
+import edu.hanu.todolist_mvp.mock.Injection;
 import edu.hanu.todolist_mvp.util.ActivityUtils;
 
 public class AddEditTaskActivity extends AppCompatActivity {
@@ -61,8 +63,10 @@ public class AddEditTaskActivity extends AppCompatActivity {
                     addEditTaskFragment, R.id.contentFrame);
         }
 
-        TasksRepository repository = TasksRepository.getInstance(TasksLocalDataSource.getInstance(this));
-        new AddEditTaskPresenter(taskId, repository, addEditTaskFragment);
+        new AddEditTaskPresenter(
+                taskId,
+                Injection.provideTasksRepository(getApplicationContext()),
+                addEditTaskFragment);
     }
 
     @Override

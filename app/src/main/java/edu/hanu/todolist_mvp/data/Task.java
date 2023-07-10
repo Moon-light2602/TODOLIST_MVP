@@ -2,9 +2,6 @@ package edu.hanu.todolist_mvp.data;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -48,7 +45,7 @@ public class Task {
      * @param desc
      * @param completed
      */
-    @Ignore
+
     public Task(@Nullable String title, @Nullable String desc, boolean completed) {
         id = UUID.randomUUID().toString();
         this.title = title;

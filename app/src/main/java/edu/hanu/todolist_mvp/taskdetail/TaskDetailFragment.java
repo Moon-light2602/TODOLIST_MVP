@@ -3,9 +3,12 @@ package edu.hanu.todolist_mvp.taskdetail;
 import static androidx.core.util.Preconditions.checkNotNull;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.ActivityResultRegistry;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -26,6 +29,7 @@ import edu.hanu.todolist_mvp.addedittask.AddEditTaskActivity;
 import edu.hanu.todolist_mvp.addedittask.AddEditTaskFragment;
 
 public class TaskDetailFragment extends Fragment implements TaskDetailContract.View {
+
     public static final String DETAIL_TASK_ID = "TASK_ID";
 
     public static final int REQUEST_EDIT_TASK = 1;
@@ -167,7 +171,20 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_EDIT_TASK) {
+            // If the task was edited successfully, go back to the list.
+            if (resultCode == Activity.RESULT_OK) {
+                getActivity().finish();
+                return;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public boolean isActive() {
         return isAdded(); // return true if fragment is currently added to its activity
     }
+
 }
